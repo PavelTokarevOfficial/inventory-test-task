@@ -41,7 +41,10 @@ const deleteValue = (value: number) => {
   const item = grid.value[sidebarActiveIndex.value];
 
   if (!item) return;
-  if (value < 0) alert('Введите число больше 0!');
+  if (value < 0) {
+    alert('Введите число больше 0!');
+    return
+  };
 
   if (item.counter > value) {
     item.counter -= value;
