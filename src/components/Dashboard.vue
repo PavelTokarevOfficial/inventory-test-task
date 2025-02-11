@@ -42,12 +42,13 @@ const deleteValue = (value: number) => {
 
   if (!item) return;
 
-  if (item.counter >= value) {
+  if (item.counter > value) {
     item.counter -= value;
     saveChanges();
-    alert(`Новое значение: ${item.counter}`);
   } else {
-    alert("Ошибка: нельзя вычитать больше, чем есть!");
+    grid.value[sidebarActiveIndex.value] = null;
+    sidebarValue.value = null;
+    saveChanges();
   }
 };
 

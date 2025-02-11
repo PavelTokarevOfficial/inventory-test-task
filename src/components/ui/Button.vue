@@ -1,5 +1,5 @@
 <template>
-  <button :class="['btn', type]" :style="{minHeight}" @click="$emit('clickOnButton', $event)">
+  <button :class="['btn', type]" :style="{minHeight}" @click="emit('clickOnButton', $event)">
     <slot/>
   </button>
 </template>
@@ -15,6 +15,10 @@ const {type, minHeight} = defineProps({
     default: '39px',
   }
 })
+
+const emit = defineEmits<{
+  (e: 'clickOnButton', event: MouseEvent): void;
+}>();
 </script>
 
 <style scoped lang="scss">

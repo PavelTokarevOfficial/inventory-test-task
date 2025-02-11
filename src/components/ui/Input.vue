@@ -4,18 +4,20 @@
       :type="type"
       :placeholder="placeholder"
       class="input"
-      :min="type === 'number' ? 1 : undefined"
+      :min="type === 'number' ? 0 : undefined"
       :inputmode="type === 'number' ? 'numeric' : undefined"
       :pattern="type === 'number' ? '\\d*' : undefined"
-      @input="validateInput"
   />
 </template>
 
 <script setup lang="ts">
-import {computed, defineEmits, defineProps} from "vue";
+import { computed, defineEmits, defineProps } from "vue";
 
 const props = defineProps({
-  modelValue: [String, Number],
+  modelValue: {
+    type: [String, Number],
+    default: String,
+  },
   placeholder: {
     type: String,
     default: "Введите текст...",
@@ -26,29 +28,20 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{
+  (event: "update:modelValue", value: string | number): void;
+}>();
 
 const inputValue = computed({
   get: () => props.modelValue,
   set: (value) => emit("update:modelValue", value),
 });
-
-const validateInput = (event: Event) => {
-  if (props.type === "number") {
-    const target = event.target as HTMLInputElement;
-    const numValue = Number(target.value);
-    if (numValue < 1) {
-      target.value = "1";
-      emit("update:modelValue", 1);
-    }
-  }
-};
 </script>
 
 <style scoped lang="scss">
 .input {
   width: 100%;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 14px;
   font-weight: 500;
   padding: 10px 11px;
@@ -61,6 +54,5 @@ const validateInput = (event: Event) => {
 .input::-webkit-outer-spin-button,
 .input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-
 }
 </style>

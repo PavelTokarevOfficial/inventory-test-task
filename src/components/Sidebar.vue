@@ -45,7 +45,11 @@ const {item} = defineProps<{
   item?: TDashboardList | null
 }>()
 
-const emit = defineEmits(["close", "deleteValue"]);
+const emit = defineEmits<{
+  (e: 'deleteValue', value: number): void
+  (e: 'close'): void
+}>()
+
 const formDeleteIsShow = ref(false)
 const numberValue = ref(1);
 
@@ -60,7 +64,7 @@ const deleteValue = () => {
 };
 
 const closeSidebar = () => {
-  emit("close", null);
+  emit("close");
   closeFormDelete()
 }
 </script>
